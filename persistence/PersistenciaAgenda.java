@@ -1,3 +1,5 @@
+package persistence;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -5,6 +7,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+
+import model.Contato;
+import model.TipoContato;        
+import service.Agenda;
 
 public class PersistenciaAgenda {
 

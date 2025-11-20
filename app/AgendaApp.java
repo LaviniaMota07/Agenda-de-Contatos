@@ -1,6 +1,14 @@
+package app;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
+
+import exception.ContatoNaoEncontradoException;
+import model.Contato;
+import model.TipoContato;         
+import persistence.PersistenciaAgenda;
+import service.Agenda;
 
 public class AgendaApp {
 
@@ -10,8 +18,6 @@ public class AgendaApp {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-
-        // Tenta carregar dados salvos
         try {
             PersistenciaAgenda.carregar(agenda, ARQUIVO_DADOS);
             System.out.println("Dados carregados com sucesso.");
@@ -24,7 +30,7 @@ public class AgendaApp {
 
         do {
             mostrarMenu();
-            opcao = lerInteiro("Escolha uma opção: ");
+            opcao = lerInteiro("Escolha uma opçao: ");
 
             try {
                 switch (opcao) {
@@ -50,16 +56,12 @@ public class AgendaApp {
                         System.out.println("Opção inválida. Tente novamente.");
                 }
             } catch (IllegalArgumentException e) {
-                // Trata erros de validação (nome vazio, telefone vazio etc.)
                 System.out.println("Erro de validação: " + e.getMessage());
             } catch (ContatoNaoEncontradoException e) {
-                // Trata regras de negócio (contato não encontrado)
                 System.out.println("Erro: " + e.getMessage());
             } catch (IOException e) {
-                // Trata erros de leitura/gravação em arquivo
                 System.out.println("Erro ao acessar o arquivo de dados: " + e.getMessage());
             } catch (Exception e) {
-                // "Rede de segurança" para qualquer erro inesperado
                 System.out.println("Ocorreu um erro inesperado.");
                 System.out.println("Detalhes técnicos (para debug): " + e.getMessage());
             }
@@ -67,8 +69,6 @@ public class AgendaApp {
             System.out.println();
 
         } while (opcao != 0);
-
-        // Não fecho o Scanner de System.in de propósito pra evitar problemas
     }
 
     private static void mostrarMenu() {
@@ -98,8 +98,6 @@ public class AgendaApp {
 
         Contato c = agenda.adicionarContato(nome, telefone, email, tipo);
         System.out.println("Contato cadastrado com sucesso! ID: " + c.getId());
-
-        // Salva após alteração
         PersistenciaAgenda.salvar(agenda, ARQUIVO_DADOS);
     }
 
@@ -183,7 +181,7 @@ public class AgendaApp {
         System.out.println("Tipo de contato:");
         System.out.println("1 - Pessoal");
         System.out.println("2 - Trabalho");
-        System.out.println("3 - Família");
+        System.out.println("3 - Familia");
         System.out.println("4 - Outros");
 
         int opcao = lerInteiro("Escolha o tipo: ");
