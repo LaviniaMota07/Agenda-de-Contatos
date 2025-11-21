@@ -1,0 +1,7 @@
+
+*.class
+
+/bin
+/out
+/target
+/build
